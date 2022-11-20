@@ -1,0 +1,46 @@
+specVersion: 0.0.4
+description: Gravatar for Ethereum
+repository: https://github.com/graphprotocol/example-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: LendingToken
+    network: mainnet
+    source:
+      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+      abi: LendingToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFT
+        - Borrower
+        - Token
+        - Loan
+      abis:
+        - name: LendingToken
+          file: ./abis/LendingToken.json
+        - name: TokenERC721
+          file: ./abis/TokenERC721.json
+        - name: TokenERC20
+          file: ./abis/TokenERC20.json
+      eventHandlers:
+        - event: AddTokenRate(address,string,uint8,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleAddTokenRate
+        - event: UpdateTokenRate(address,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleUpdateTokenRate
+        - event: LoanRequest(uint256,address,address,uint256,address,uint256,uint256,uint256,uint8,uint256)
+          handler: handleLoanRequest
+        - event: LoanAcceptedOrRejected(uint256,uint8,uint256,uint256)
+          handler: handleLoanAcceptedOrRejected  
+        - event: LoanRepaied(uint256,uint8,uint256) 
+          handler: handleLoanRepaied
+        - event: LoanExtension(uint256,uint256,uint256,uint256,uint256) 
+          handler: handleLoanExtension
+        - event: LoanRepaiedEarly(uint256,uint8,uint256,uint256) 
+          handler: handleLoanRepaiedEarly
+        - event: LoanLiquidate(uint256,uint8,uint256) 
+          handler: handleLoanLiquidate
+      file: ./src/mapping.ts

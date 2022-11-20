@@ -1,0 +1,45 @@
+type NFT @entity {
+  id: String!
+  address: Bytes!
+  tokenId: BigInt!
+  tokenUri: String
+}
+
+type Borrower @entity {
+  id: Bytes!
+}
+
+type Token @entity{
+  id: Bytes!
+  symbol: String!
+  decimal: Int
+  asset: BigInt
+  interestRateNumerator: BigInt!
+  interestRateDenominator: BigInt!
+  extendedRateNumerator: BigInt!
+  extendedRateDenominator: BigInt!
+  earlyRateNumerator: BigInt!
+  earlyRateDenominator: BigInt!
+  test: String
+}
+
+type Loan @entity{
+  id: ID!
+  borrower: Borrower!
+  nft: NFT!
+  token: Token!
+  loanAmount: BigInt!
+  payoffAmount: BigInt!
+  startDate: BigInt
+  loanDuration: BigInt!
+  dueDate: BigInt
+  state: Int!
+  extendedDuration: BigInt
+  extendedFee: BigInt
+  repaiedEarlyFee: BigInt
+  createdAt: BigInt!
+  repaiedAt: BigInt
+  extendedAt: BigInt
+  liquidateAt: BigInt
+  repaiedEarlyAt: BigInt
+}
